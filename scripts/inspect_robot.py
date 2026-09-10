@@ -29,7 +29,7 @@ simulation_app = app_launcher.app
 import isaaclab.sim as sim_utils
 from isaaclab.assets import Articulation
 
-from M20_rl.assets import M20_CFG, M20_USD_PATH
+from M20_rl.assets import M20_CFG, M20_URDF_PATH
 
 
 def design_scene():
@@ -44,7 +44,7 @@ def design_scene():
 
 def run_inspector(robot: Articulation) -> None:
     """Print joint and body names and step the simulation briefly."""
-    print(f"[INFO] USD path : {M20_USD_PATH}")
+    print(f"[INFO] URDF path: {M20_URDF_PATH}")
     print(f"[INFO] num_joints = {robot.num_joints}")
     print("[INFO] Joint names:")
     for i, name in enumerate(robot.data.joint_names):

@@ -39,7 +39,7 @@ class M20FlatEnvCfg_PLAY(M20FlatEnvCfg):
         super().__post_init__()
 
         # make a smaller scene for play
-        self.scene.num_envs = 50
+        self.scene.num_envs = 8
         self.scene.env_spacing = 2.5
         # disable observation noise for deterministic playback
         self.observations.policy.enable_corruption = False

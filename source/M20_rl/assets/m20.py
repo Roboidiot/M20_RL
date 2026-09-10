@@ -13,6 +13,11 @@ This gives 16 actuated joints in total. The hip/knee joints are driven in
 joints are driven in *velocity* mode (implicit actuator with ``stiffness=0`` and
 a non-zero ``damping`` -- the damping converts the commanded joint velocity into
 torque).
+
+The robot is loaded from the URDF file (``M20.urdf``), which IsaacLab converts
+to a USD articulation at runtime via the built-in URDF importer. This is more
+robust than the bundled USD, which uses the ``IsaacRobotAPI`` format that
+IsaacLab's articulation importer does not resolve into PhysX joints.
 """
 
 import os
@@ -21,16 +26,22 @@ import isaaclab.sim as sim_utils
 from isaaclab.actuators import ImplicitActuatorCfg
 from isaaclab.assets import ArticulationCfg
 
-# Absolute path to the M20 USD file (resolved relative to this source file so
+# Absolute paths to the robot files (resolved relative to this source file so
 # that the asset loads regardless of the current working directory).
-M20_USD_PATH = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "M20", "M20_usd", "M20.usd"
-)
+_M20_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "M20")
+M20_URDF_PATH = os.path.join(_M20_DIR, "urdf", "M20.urdf")
+M20_USD_PATH = os.path.join(_M20_DIR, "M20_usd", "M20.usd")
 
 
 M20_CFG = ArticulationCfg(
-    spawn=sim_utils.UsdFileCfg(
-        usd_path=M20_USD_PATH,
+    spawn=sim_utils.UrdfFileCfg(
+        asset_path=M20_URDF_PATH,
+        # The base link is free-floating (mobile robot).
+        fix_base=False,
+        # Merge the fixed sensor joints (camera/lidar) into their parent link.
+        merge_fixed_joints=True,
+        make_instanceable=True,
+        force_usd_conversion=False,
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
