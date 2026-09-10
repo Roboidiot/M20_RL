@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: BSD-3-Clause
-"""Inspect the M20 USD asset and print its joint/body names.
+"""Inspect the M20 robot asset and print its joint/body names.
 
 This is useful to verify that the joint-name regular expressions used in the
 action/actuator configuration (``.*_hipx_joint``, ``.*_wheel_joint``, ...) match
-the names that IsaacLab actually resolves from the USD articulation.
+the names that IsaacLab actually resolves from the articulation.
 
 Example
 -------
 
 .. code-block:: bash
 
-    ./isaaclab.sh -p scripts/inspect_robot.py
+    python scripts/inspect_robot.py
 """
 
 import argparse
@@ -42,9 +42,9 @@ def design_scene():
     return robot
 
 
-def run_inspector(robot: Articulation) -> None:
+def run_inspector(robot: Articulation, sim: sim_utils.SimulationContext) -> None:
     """Print joint and body names and step the simulation briefly."""
-    print(f"[INFO] URDF path: {M20_URDF_PATH}")
+    print(f"[INFO] URDF path : {M20_URDF_PATH}")
     print(f"[INFO] num_joints = {robot.num_joints}")
     print("[INFO] Joint names:")
     for i, name in enumerate(robot.data.joint_names):
@@ -55,10 +55,7 @@ def run_inspector(robot: Articulation) -> None:
         print(f"  - {name}")
     print("[INFO] Stepping the simulation for 10 steps to check for errors...")
     for _ in range(10):
-        robot.write_root_pose_to_sim()
-        robot.write_joint_state_to_sim()
-        robot.reset()
-        simulation_app.update()
+        sim.step(render=False)
 
 
 def main():
@@ -67,7 +64,8 @@ def main():
     sim.set_camera_view(eye=[2.5, 0.0, 1.0], target=[0.0, 0.0, 0.3])
     robot = design_scene()
     sim.reset()
-    run_inspector(robot)
+    run_inspector(robot, sim)
+    print("[INFO] Done. The articulation loads and steps without errors.")
 
 
 if __name__ == "__main__":
