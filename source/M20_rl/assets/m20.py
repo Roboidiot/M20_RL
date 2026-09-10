@@ -54,8 +54,8 @@ M20_CFG = ArticulationCfg(
         pos=(0.0, 0.0, 0.6),
         rot=(1.0, 0.0, 0.0, 0.0),
         # Default pose is the URDF zero configuration (legs fully extended).
-        joint_pos={},
-        joint_vel={},
+        joint_pos={".*": 0.0},
+        joint_vel={".*": 0.0},
     ),
     actuators={
         # Legs (hipx / hipy / knee): position-controlled implicit PD actuators.
@@ -76,5 +76,5 @@ M20_CFG = ArticulationCfg(
             velocity_limit_sim=30.0,
         ),
     },
-    soft_joint_pos_limit_fraction=0.9,
+    soft_joint_pos_limit_factor=0.9,
 )
