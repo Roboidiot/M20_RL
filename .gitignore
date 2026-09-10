@@ -1,0 +1,42 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+conda-env/
+
+# ---- IsaacLab / RL training runtime outputs ----
+logs/
+outputs/
+*.pth
+*.pt
+*.onnx
+*.jit
+runs/
+wandb/
+*.tensorboard/
+checkpoints/
+
+# ---- IDE / editor ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Misc ----
+*.log
+*.tmp
