@@ -42,6 +42,9 @@ M20_CFG = ArticulationCfg(
         merge_fixed_joints=True,
         make_instanceable=True,
         force_usd_conversion=False,
+        # No conversion-time joint drive: the runtime actuators (ImplicitActuatorCfg
+        # below) set the per-joint stiffness/damping themselves.
+        joint_drive=None,
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
