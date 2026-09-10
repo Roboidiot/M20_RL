@@ -50,7 +50,6 @@ def main():
         args_cli.task,
         device=args_cli.device,
         num_envs=args_cli.num_envs,
-        use_fabric=not args_cli.disable_fabric,
     )
     agent_cfg: RslRlBaseRunnerCfg = load_cfg_from_registry(args_cli.task, "rsl_rl_cfg_entry_point")
 
